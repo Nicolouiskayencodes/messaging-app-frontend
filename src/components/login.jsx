@@ -1,9 +1,10 @@
-import { useRef} from "react";
+import { useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
  
 function Login(){
   const username = useRef(null)
   const password = useRef(null)
+  const [errors, setErrors] = useState(null)
   const navigate = useNavigate();
 
   const submitLogin = async (event) => {
@@ -21,20 +22,27 @@ function Login(){
   }).then(res=>{
       return res.json();
   }).then(data=>{
-      console.log(data);
-      navigate('/')
+      if (data.errors) {
+        console.log(data.errors);
+        setErrors(data.errors)
+      } else{
+        console.log(data);
+        navigate('/')
+      }
   })
   }
 
     return(
+      <>
+      {errors && errors.map(error=><p key={errors.indexOf(error)}>{error.msg}</p>)}
         <form className="login">
-            <h1>Username</h1>
-            <input placeholder="Username" name="username" ref={username} />
-            <h1>Password</h1>
-            <input placeholder="Password" name="password" ref={password} />
-
-            <button onClick={submitLogin}>Login</button>
+          <label>Username <br/>
+            <input placeholder="Username" name="username" ref={username} /></label><br/>
+          <label>Password<br/>
+            <input placeholder="Password" name="password" ref={password} /></label><br/>
+          <button onClick={submitLogin}>Login</button>
         </form>  
+        </>
     )
 }
 

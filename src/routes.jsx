@@ -1,6 +1,4 @@
 import App from "./App";
-import Login from "./components/login";
-import Protected from "./components/protected";
 
 const routes = [
   {
@@ -8,13 +6,9 @@ const routes = [
     element: <App />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/:page",
+    element: <App />,
   }, 
-  {
-    path: "/protected",
-    element: <Protected />
-  },
 ];
 
 export default routes;

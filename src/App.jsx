@@ -1,6 +1,12 @@
-import { Link} from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
+import Logout from "./components/logout";
+import Protected from "./components/protected";
+import Login from "./components/login";
+import Register from "./components/register";
+import Home from "./components/home";
 
 function App(){
+  const {page} = useParams();
 
     const logout = () => {
       fetch("http://localhost:3000/logout", {
@@ -24,8 +30,19 @@ function App(){
                     <Link to="/login">Login</Link>
                     <button onClick={logout}>Logout</button>
                     <Link to='/protected'>Protected</Link>
+                    <Link to='/register'>Register</Link>
+                    <Logout />
                 </div>
             </div>
+            {page === 'login' ? (
+              <Login />
+            ): page === 'register' ? (
+              <Register />
+            ): page === 'protected' ? (
+              <Protected />
+            ) : (
+              <Home />
+            )}
       </>
     )
 }
