@@ -27,9 +27,10 @@ function Login(){
         setErrors(data.errors)
       } else{
         console.log(data);
-        navigate('/')
       }
-  })
+  }).finally(
+      navigate('/')
+  )
   }
 
     return(

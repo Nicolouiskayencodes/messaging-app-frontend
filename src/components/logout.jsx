@@ -1,5 +1,6 @@
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-function Logout() {
+function Logout({userDelete}) {
   const navigate = useNavigate();
   const logout = async (event) => {
     event.preventDefault()  
@@ -13,6 +14,9 @@ function Logout() {
       return res.json();
   }).then(data=>{
       console.log(data);
+      if(data.message === 'Logout success') {
+        userDelete()
+      }
       navigate('/')
   })
   }
@@ -20,4 +24,10 @@ function Logout() {
     <button onClick={logout}>Logout</button>
   )
 }
+
+Logout.propTypes = {
+  userDelete : PropTypes.func
+}
+
+
 export default Logout;
