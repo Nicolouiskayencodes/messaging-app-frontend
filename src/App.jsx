@@ -6,6 +6,7 @@ import Register from "./components/register";
 import Home from "./components/home";
 import { useState, useEffect } from "react";
 import './App.css'
+import CreateConversation from "./components/createConversation";
 
 function App(){
   const {page} = useParams();
@@ -48,6 +49,8 @@ function App(){
           <Register />
         ): page === 'protected' ? (
           <Protected />
+        ) : page === 'create' ? (
+          <CreateConversation/>
         ) : (
           <Home />
         )}
