@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import { useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
  
-function Login(){
+function Login({loginUser}){
   const username = useRef(null)
   const password = useRef(null)
   const [errors, setErrors] = useState(null)
@@ -27,11 +28,11 @@ function Login(){
         setErrors(data.errors)
       } else{
         console.log(data);
+        loginUser(data)
+        navigate('/')
       }
-  }).finally(
-      navigate('/')
-  )
-  }
+  })
+}
 
     return(
       <>
@@ -48,3 +49,7 @@ function Login(){
 }
 
 export default Login;
+
+Login.propTypes = {
+  loginUser: PropTypes.func,
+}

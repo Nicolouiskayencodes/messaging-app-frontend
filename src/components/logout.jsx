@@ -21,7 +21,7 @@ function Logout({userDelete}) {
   })
   }
   return(
-    <button onClick={logout}>Logout</button>
+    <button className="navlink" onClick={logout}>Logout</button>
   )
 }
 

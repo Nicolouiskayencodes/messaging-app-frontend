@@ -5,15 +5,17 @@ import Login from "./components/login";
 import Register from "./components/register";
 import Home from "./components/home";
 import { useState, useEffect } from "react";
+import './App.css'
 
 function App(){
   const {page} = useParams();
   const [user, setUser] = useState(null)
 
   const deleteUser = ()=> setUser(null)
+  const loginUser = (userdata) => setUser(userdata);
 
   useEffect(()=>{
-    fetch('http://localhost:3000/userinfo', {
+    fetch('http://localhost:3000/protected', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -22,48 +24,35 @@ function App(){
     }
     )
     .then(response => {return response.json()} )
-    .then(response=> {console.log(response);
+    .then(response=> {
   setUser(response);})
   },[])
 
-    const logout = () => {
-      fetch("http://localhost:3000/logout", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: 'include'
-    }).then(res=>{
-        return res.json();
-    }).then(data=>{
-        console.log(data);
-    })
-    }
     console.log(user)
 
-    return(
-      <>
-          <p>Hello world</p>
-            <div className="header">
-                <div className="navbar">
-                    <Link to="/login">Login</Link>
-                    <button onClick={logout}>Logout</button>
-                    <Link to='/protected'>Protected</Link>
-                    <Link to='/register'>Register</Link>
-                    <Logout userDelete={deleteUser}/>
-                </div>
-            </div>
-            {page === 'login' ? (
-              <Login />
-            ): page === 'register' ? (
-              <Register />
-            ): page === 'protected' ? (
-              <Protected />
-            ) : (
-              <Home />
-            )}
-      </>
-    )
+  return(
+    <>
+      <p>Hello world</p>
+        <div className="header">
+          <div className="navbar">
+            <button className="navlink"><Link to='/'>Home</Link></button>
+            <button className="navlink"><Link to="/login">Login</Link></button>
+            <button className="navlink"><Link to='/protected'>Protected</Link></button>
+            <button className="navlink"><Link to='/register'>Register</Link></button>
+            <Logout userDelete={deleteUser}/>
+          </div>
+        </div>
+        {page === 'login' ? (
+          <Login loginUser={loginUser}/>
+        ): page === 'register' ? (
+          <Register />
+        ): page === 'protected' ? (
+          <Protected />
+        ) : (
+          <Home />
+        )}
+    </>
+  )
 }
 
 export default App;
