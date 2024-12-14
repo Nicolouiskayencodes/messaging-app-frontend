@@ -5,9 +5,11 @@ import Message from "./message";
 function Conversation({conversationId}) {
   const [messages, setMessages] = useState(null)
   const [user, setUser] = useState(null)
+  const [reload, setReload] = useState(false)
   const newMessage = useRef(null);
   const photo = useRef(null);
   useEffect(()=>{
+    setReload(false)
     fetch('http://localhost:3000/userInfo', {
       method: "GET",
       headers: {
@@ -34,7 +36,7 @@ function Conversation({conversationId}) {
       console.log(response);
       setMessages(response.Messages)
     })
-  }, [conversationId])
+  }, [conversationId, reload])
   const addPhoto = () => {
 
   }
@@ -68,11 +70,13 @@ function Conversation({conversationId}) {
       .then(response => {return response.json()} )
       .then(response=> { console.log(response)})
     }
-    
+    newMessage.current.value = null
+    photo.current.value = null
+    setReload(true)
   }
   console.log(messages)
   return(<>
-    {messages && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} />)}
+    {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} />)}
     <form onSubmit={submitMessage}><input type="file" onClick={addPhoto} ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input><button type="submit">Send</button></form>
   </>)
 }
