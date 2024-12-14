@@ -9,6 +9,10 @@ const routes = [
     path: "/:page",
     element: <App />,
   }, 
+  {
+    path:"/:page/:elementid",
+    element: <App />
+  }
 ];
 
 export default routes;

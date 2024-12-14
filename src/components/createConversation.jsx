@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateConversation(){
+  const navigate = useNavigate();
   const [users, setUsers] = useState(null);
   const [recipients, setRecipients] = useState([])
   console.log(recipients)
@@ -46,6 +48,8 @@ function CreateConversation(){
     .then(response => {return response.json()} )
     .then(response=> {
       console.log(response)
+      const id = response.id;
+      navigate(`/conversation/${id}`)
     })
   }
   }
@@ -54,10 +58,10 @@ function CreateConversation(){
   return(
     <>
     <h1>Recipients</h1>
-    <ul>
+    <ul className="recipient-list">
       {recipients && recipients.map(recipient => <p key={recipients.indexOf(recipient)}>{recipient.displayName || recipient.username}<button onClick={()=>removeRecipient(recipient)}>X</button> </p>)}
     </ul>
-    <ul>
+    <ul className="user-list">
       {users && users.map(user => <p key={user.id}>{user.displayName || user.username}<button onClick={() => addRecipient(user)}>+</button></p>)}
     </ul>
     <button onClick={startConversation}>Message</button>

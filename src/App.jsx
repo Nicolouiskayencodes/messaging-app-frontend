@@ -4,12 +4,13 @@ import Protected from "./components/protected";
 import Login from "./components/login";
 import Register from "./components/register";
 import Home from "./components/home";
+import Conversation from "./components/conversation"
 import { useState, useEffect } from "react";
 import './App.css'
 import CreateConversation from "./components/createConversation";
 
 function App(){
-  const {page} = useParams();
+  const {page, elementid} = useParams();
   const [user, setUser] = useState(null)
 
   const deleteUser = ()=> setUser(null)
@@ -51,6 +52,8 @@ function App(){
           <Protected />
         ) : page === 'create' ? (
           <CreateConversation/>
+        ) : page === 'conversation' ? (
+          <Conversation conversationId={parseInt(elementid)} user={user}/>
         ) : (
           <Home />
         )}
