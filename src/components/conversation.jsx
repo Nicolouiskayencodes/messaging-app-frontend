@@ -39,9 +39,6 @@ function Conversation({conversationId}) {
       setRecipients(response.Users)
     })
   }, [conversationId, reload])
-  const addPhoto = () => {
-
-  }
   const submitMessage = (event) => {
     event.preventDefault();
     console.log(photo.current.files)
@@ -76,12 +73,13 @@ function Conversation({conversationId}) {
     photo.current.value = null
     setReload(true)
   }
+  const childReload= () => setReload(true)
   console.log(messages)
   console.log(recipients)
   return(<>
     <div>{(recipients && user) && recipients.map(recipient => <span key={recipient.id}>{recipient.id !== user.id && <>{recipient.displayName || recipient.username}</>}</span>)}</div>
-    {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} />)}
-    <form onSubmit={submitMessage}><input type="file" onClick={addPhoto} ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input><button type="submit">Send</button></form>
+    {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} reload={childReload}/>)}
+    <form onSubmit={submitMessage}><input type="file" ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input><button type="submit">Send</button></form>
   </>)
 }
 

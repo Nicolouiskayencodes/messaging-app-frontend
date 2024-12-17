@@ -8,15 +8,24 @@ import Conversation from "./components/conversation"
 import { useState, useEffect } from "react";
 import './App.css'
 import CreateConversation from "./components/createConversation";
+import Profile from "./components/profile";
 
 function App(){
   const {page, elementid} = useParams();
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const [reload, setReload] = useState(false);
 
-  const deleteUser = ()=> setUser(null)
-  const loginUser = (userdata) => setUser(userdata);
+  const deleteUser = ()=> {
+    setUser(null);
+    setReload(true)
+  }
+  const loginUser = (userdata) => {
+    setUser(userdata);
+    setReload(true)
+  }
 
   useEffect(()=>{
+    setReload(false)
     fetch('http://localhost:3000/userInfo', {
       method: "GET",
       headers: {
@@ -28,19 +37,20 @@ function App(){
     .then(response => {return response.json()} )
     .then(response=> {
   setUser(response);})
-  },[])
+  },[reload])
 
     console.log(user)
 
   return(
     <>
-      <p>Hello world</p>
+      {user && <p>Welcome {user.username}</p>}
         <div className="header">
           <div className="navbar">
             <button className="navlink"><Link to='/'>Home</Link></button>
             <button className="navlink"><Link to="/login">Login</Link></button>
             <button className="navlink"><Link to='/protected'>Protected</Link></button>
             <button className="navlink"><Link to='/register'>Register</Link></button>
+            <button className="navlink"><Link to='/profile'>Profile</Link></button>
             <Logout userDelete={deleteUser}/>
           </div>
         </div>
@@ -50,12 +60,14 @@ function App(){
           <Register />
         ): page === 'protected' ? (
           <Protected />
-        ) : (page === 'create' ) ? (
+        ) : page === 'create'  ? (
           <CreateConversation toUser={parseInt(elementid)}/>
         ) : page === 'conversation' ? (
-          <Conversation conversationId={parseInt(elementid)} user={user}/>
+          <Conversation conversationId={parseInt(elementid)}/>
+        ) : page === 'profile' ? (
+          <Profile/>
         ) : (
-          <Home user={user}/>
+          <Home reload={reload}/>
         )}
     </>
   )

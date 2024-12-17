@@ -17,6 +17,7 @@ function User({user}) {
 
   return(
     <div className="user">
+      <img className="avatar" src={user.avatar}/>
       {user.displayName ? (<button className="userbtn">{user.displayName}</button>) : (<button className="userbtn">{user.username}</button>)}
       <div className="user-dropdown">
         <p>user.username</p>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import User from "./user";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function Home(){
+function Home({reload}){
   const [conversations, setConversations] = useState(null);
   const [users, setUsers] = useState(null);
   const [friends, setFriends] = useState(null)
@@ -20,18 +21,6 @@ function Home(){
     .then(response=> {
       console.log(response)
       setUser(response)
-    })
-    fetch('http://localhost:3000/userInfo', {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      credentials: "include"
-    }
-    )
-    .then(response => {return response.json()} )
-    .then(response=> {
-      console.log(response)
   setConversations(response.conversations)
   setFriends(response.friends);})
   fetch('http://localhost:3000/users', {
@@ -50,7 +39,7 @@ function Home(){
       setUsers(response)
     }
 })
-  },[])
+  },[reload])
   console.log(conversations)
   console.log(users)
   console.log(friends)
@@ -61,7 +50,7 @@ function Home(){
       <>
     {users.map(user => <User key={users.indexOf(user)} user={user} />)}
     <h2>Friends</h2>
-    {friends && friends.map(friend => <div key={friends.indexOf(friend)}><p>{friend.displayName || friend.username}</p><p>{friend.lastActive}</p><Link to={`/create/${friend.id}`}>Message</Link> </div>)}
+    {friends && friends.map(friend => <div key={friends.indexOf(friend)}><img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p><p>{friend.lastActive}</p><Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</>)}</div>)}
     {conversations && conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
         <span key={recipient.id}>{(user.id !== recipient.id) && <>{recipient.displayName || recipient.username} </>}</span>)}<br/>
@@ -74,3 +63,7 @@ function Home(){
 }
 
 export default Home;
+
+Home.propTypes = {
+  reload: PropTypes.bool
+}
