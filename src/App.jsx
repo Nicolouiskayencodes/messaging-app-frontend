@@ -17,7 +17,7 @@ function App(){
   const loginUser = (userdata) => setUser(userdata);
 
   useEffect(()=>{
-    fetch('http://localhost:3000/protected', {
+    fetch('http://localhost:3000/userInfo', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -55,7 +55,7 @@ function App(){
         ) : page === 'conversation' ? (
           <Conversation conversationId={parseInt(elementid)} user={user}/>
         ) : (
-          <Home />
+          <Home user={user}/>
         )}
     </>
   )

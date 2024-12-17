@@ -43,7 +43,7 @@ function Conversation({conversationId}) {
   const submitMessage = (event) => {
     event.preventDefault();
     console.log(photo.current.files)
-    if (photo.current.files){ 
+    if (photo.current.files[0]){ 
       const formData = new FormData()
       formData.append('file', photo.current.files[0])
       fetch(`http://localhost:3000/message/${conversationId}`, {
