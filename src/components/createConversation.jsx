@@ -79,5 +79,5 @@ function CreateConversation({toUser}){
 export default CreateConversation;
 
 CreateConversation.propTypes = {
-  toUser: PropTypes.oneOfType([PropTypes.number, PropTypes.undefined])
+  toUser: PropTypes.number
 }

@@ -50,10 +50,8 @@ function App(){
           <Register />
         ): page === 'protected' ? (
           <Protected />
-        ) : (page === 'create' && elementid) ? (
+        ) : (page === 'create' ) ? (
           <CreateConversation toUser={parseInt(elementid)}/>
-        ) : page === 'create' ? (
-          <CreateConversation/>
         ) : page === 'conversation' ? (
           <Conversation conversationId={parseInt(elementid)} user={user}/>
         ) : (
