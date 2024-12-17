@@ -61,7 +61,7 @@ function Home(){
       <>
     {users.map(user => <User key={users.indexOf(user)} user={user} />)}
     <h2>Friends</h2>
-    {friends && friends.map(friend => <div key={friends.indexOf(friend)}><p>{friend.displayName || friend.username}</p><p>{friend.lastActive}</p></div>)}
+    {friends && friends.map(friend => <div key={friends.indexOf(friend)}><p>{friend.displayName || friend.username}</p><p>{friend.lastActive}</p><Link to={`/create/${friend.id}`}>Message</Link> </div>)}
     {conversations && conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
         <span key={recipient.id}>{(user.id !== recipient.id) && <>{recipient.displayName || recipient.username} </>}</span>)}<br/>

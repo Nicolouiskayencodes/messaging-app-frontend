@@ -5,6 +5,7 @@ import Message from "./message";
 function Conversation({conversationId}) {
   const [messages, setMessages] = useState(null)
   const [user, setUser] = useState(null)
+  const [recipients, setRecipients]= useState(null)
   const [reload, setReload] = useState(false)
   const newMessage = useRef(null);
   const photo = useRef(null);
@@ -35,6 +36,7 @@ function Conversation({conversationId}) {
     .then(response=> {
       console.log(response);
       setMessages(response.Messages)
+      setRecipients(response.Users)
     })
   }, [conversationId, reload])
   const addPhoto = () => {
@@ -75,7 +77,9 @@ function Conversation({conversationId}) {
     setReload(true)
   }
   console.log(messages)
+  console.log(recipients)
   return(<>
+    <div>{(recipients && user) && recipients.map(recipient => <span key={recipient.id}>{recipient.id !== user.id && <>{recipient.displayName || recipient.username}</>}</span>)}</div>
     {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} />)}
     <form onSubmit={submitMessage}><input type="file" onClick={addPhoto} ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input><button type="submit">Send</button></form>
   </>)

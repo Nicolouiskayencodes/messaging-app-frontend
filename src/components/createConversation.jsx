@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CreateConversation(){
+function CreateConversation({toUser}){
   const navigate = useNavigate();
   const [users, setUsers] = useState(null);
   const [recipients, setRecipients] = useState([])
@@ -21,9 +22,14 @@ function CreateConversation(){
         setUsers(null)
       } else {
         setUsers(response)
+        response.forEach(person => {
+          if (person.id === toUser){
+            setRecipients([person])
+          }
+        });
       }
   })
-  }, [])
+  }, [toUser])
   const addRecipient = (user) => {
     if (!recipients.includes(user)) {
       setRecipients([...recipients, user])
@@ -62,7 +68,7 @@ function CreateConversation(){
       {recipients && recipients.map(recipient => <p key={recipients.indexOf(recipient)}>{recipient.displayName || recipient.username}<button onClick={()=>removeRecipient(recipient)}>X</button> </p>)}
     </ul>
     <ul className="user-list">
-      {users && users.map(user => <p key={user.id}>{user.displayName || user.username}<button onClick={() => addRecipient(user)}>+</button></p>)}
+      {users && users.map(user => <p key={user.id}>{user.displayName || user.username}{!recipients.includes(user) && <button onClick={() => addRecipient(user)}>+</button>}</p>)}
     </ul>
     <button onClick={startConversation}>Message</button>
     </>
@@ -71,3 +77,7 @@ function CreateConversation(){
 }
 
 export default CreateConversation;
+
+CreateConversation.propTypes = {
+  toUser: PropTypes.oneOfType([PropTypes.number, PropTypes.undefined])
+}
