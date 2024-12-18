@@ -8,6 +8,7 @@ function Home({reload}){
   const [users, setUsers] = useState(null);
   const [friends, setFriends] = useState(null)
   const [user, setUser] = useState(null)
+  const [open, setOpen] = useState(false)
   useEffect(()=> {
     fetch('http://localhost:3000/userInfo', {
       method: "GET",
@@ -40,17 +41,25 @@ function Home({reload}){
     }
 })
   },[reload])
+  const now = new Date()
+  const timeout = new Date(now.getTime() - (5*60*1000))
   console.log(conversations)
   console.log(users)
   console.log(friends)
+  console.log(timeout)
   return(
     <>
     <h1>Home</h1>
     { users ? (
       <>
-    {users.map(user => <User key={users.indexOf(user)} user={user} />)}
+      <div>
+        {!open && <button onClick={()=>setOpen(true)}>See Users </button>}
+        {open && users.map(user => <User key={users.indexOf(user)} user={user} />)}
+        {open && <button onClick={()=>setOpen(false)}>Close</button>}
+      </div>
     <h2>Friends</h2>
-    {friends && friends.map(friend => <div key={friends.indexOf(friend)}><img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p><p>{friend.lastActive}</p><Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</>)}</div>)}
+    {friends && friends.map(friend => <div key={friends.indexOf(friend)}>
+      <img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p>{(new Date(friend.lastActive) > timeout) && <p>online</p>}<Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</>)}</div>)}
     {conversations && conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
         <span key={recipient.id}>{(user.id !== recipient.id) && <>{recipient.displayName || recipient.username} </>}</span>)}<br/>

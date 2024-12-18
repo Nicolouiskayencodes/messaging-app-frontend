@@ -46,7 +46,7 @@ function Message({message, user, reload}) {
         <button onClick={deleteComment}>Delete</button>
       </div>
       )}
-    </>) : (<div className="received"><img src={message.image}/><p>{message.content}</p><p>{message.author.displayName || message.author.username}</p><p>{Date(message.createdA)}</p></div>)}
+    </>) : (<div className="received"><img src={message.image}/><p>{message.content}</p><img className="avatar" src={message.author.avatar}/><p>{message.author.displayName || message.author.username}</p><p>{Date(message.createdA)}</p></div>)}
   </>)
 }
 

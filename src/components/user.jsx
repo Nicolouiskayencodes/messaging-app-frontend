@@ -20,7 +20,8 @@ function User({user}) {
       <img className="avatar" src={user.avatar}/>
       {user.displayName ? (<button className="userbtn">{user.displayName}</button>) : (<button className="userbtn">{user.username}</button>)}
       <div className="user-dropdown">
-        <p>user.username</p>
+        {user.avatar && <img src={user.avatar}/>}
+        <p>{user.username}</p>
         <button onClick={()=>addFriend(user.id)}>Add Friend</button>
       </div>
     </div>
