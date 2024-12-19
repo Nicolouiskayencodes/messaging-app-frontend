@@ -1,6 +1,5 @@
 import { Link, useParams} from "react-router-dom";
 import Logout from "./components/logout";
-import Protected from "./components/protected";
 import Login from "./components/login";
 import Register from "./components/register";
 import Home from "./components/home";
@@ -39,7 +38,6 @@ function App(){
   setUser(response);})
   },[reload])
 
-    console.log(user)
 
   return(
     <>
@@ -48,7 +46,6 @@ function App(){
           <div className="navbar">
             <button className="navlink"><Link to='/'>Home</Link></button>
             <button className="navlink"><Link to="/login">Login</Link></button>
-            <button className="navlink"><Link to='/protected'>Protected</Link></button>
             <button className="navlink"><Link to='/register'>Register</Link></button>
             <button className="navlink"><Link to='/profile'>Profile</Link></button>
             <Logout userDelete={deleteUser}/>
@@ -58,9 +55,7 @@ function App(){
           <Login loginUser={loginUser}/>
         ): page === 'register' ? (
           <Register />
-        ): page === 'protected' ? (
-          <Protected />
-        ) : page === 'create'  ? (
+        ): page === 'create'  ? (
           <CreateConversation toUser={parseInt(elementid)}/>
         ) : page === 'conversation' ? (
           <Conversation conversationId={parseInt(elementid)}/>

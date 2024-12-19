@@ -20,7 +20,6 @@ function Home({reload}){
     )
     .then(response => {return response.json()} )
     .then(response=> {
-      console.log(response)
       setUser(response)
   setConversations(response.conversations)
   setFriends(response.friends);})
@@ -43,10 +42,6 @@ function Home({reload}){
   },[reload])
   const now = new Date()
   const timeout = new Date(now.getTime() - (5*60*1000))
-  console.log(conversations)
-  console.log(users)
-  console.log(friends)
-  console.log(timeout)
   return(
     <>
     <h1>Home</h1>

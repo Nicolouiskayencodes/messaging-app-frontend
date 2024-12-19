@@ -10,11 +10,10 @@ function Logout({userDelete}) {
           "Content-Type": "application/json"
       },
       credentials: "include"
-  }).then(res=>{
-      return res.json();
-  }).then(data=>{
-      console.log(data);
-      if(data.message === 'Logout success') {
+  }).then(response=>{
+      return response.json();
+  }).then(response=>{
+      if(response.message === 'Logout success') {
         userDelete()
       }
       navigate('/')

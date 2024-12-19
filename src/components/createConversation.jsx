@@ -6,7 +6,6 @@ function CreateConversation({toUser}){
   const navigate = useNavigate();
   const [users, setUsers] = useState(null);
   const [recipients, setRecipients] = useState([])
-  console.log(recipients)
   useEffect(()=>{
     fetch('http://localhost:3000/users', {
       method: "GET",
@@ -53,7 +52,6 @@ function CreateConversation({toUser}){
     )
     .then(response => {return response.json()} )
     .then(response=> {
-      console.log(response)
       const id = response.id;
       navigate(`/conversation/${id}`)
     })

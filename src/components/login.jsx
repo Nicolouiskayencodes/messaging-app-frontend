@@ -27,7 +27,6 @@ function Login({loginUser}){
         console.log(data.errors);
         setErrors(data.errors)
       } else{
-        console.log(data);
         loginUser(data)
         navigate('/')
       }
