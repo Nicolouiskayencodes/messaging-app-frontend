@@ -5,8 +5,8 @@ import { useState } from "react";
 function Message({message, user, reload}) {
   const [edit, setEdit] = useState(false);
   const comment = useRef(null)
-  const submitEdit = () => {
-    fetch(`http://localhost:3000/message/${message.id}`, {
+  const submitEdit = async () => {
+   await fetch(`http://localhost:3000/message/${message.id}`, {
       method: "PUT", 
       headers: {
         "Content-Type": "application/json"
@@ -22,8 +22,8 @@ function Message({message, user, reload}) {
     setEdit(false)
     reload()
   }
-  const deleteComment = () => {
-    fetch(`http://localhost:3000/message/${message.id}`, {
+  const deleteComment = async () => {
+    await fetch(`http://localhost:3000/message/${message.id}`, {
       method: "DELETE", 
       credentials: "include",
     }
@@ -36,7 +36,7 @@ function Message({message, user, reload}) {
   return(<>
     {message.authorId === user.id ? (<>
       {(edit) ? (
-        <div className="sent"><input defaultValue={message.content} ref={comment}></input> 
+        <div className="sent"><img src={message.image}/><input defaultValue={message.content} ref={comment}></input> 
       <button onClick={submitEdit}>Edit</button>
         <button onClick={()=>setEdit(false)}>Cancel</button>
       </div>

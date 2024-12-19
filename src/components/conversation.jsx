@@ -7,10 +7,12 @@ function Conversation({conversationId}) {
   const [user, setUser] = useState(null)
   const [recipients, setRecipients]= useState(null)
   const [reload, setReload] = useState(false)
+  const [sending, setSending] = useState(false)
   const newMessage = useRef(null);
   const photo = useRef(null);
   useEffect(()=>{
     setReload(false)
+    setSending(false)
     fetch('http://localhost:3000/userInfo', {
       method: "GET",
       headers: {
@@ -39,38 +41,29 @@ function Conversation({conversationId}) {
       setRecipients(response.Users)
     })
   }, [conversationId, reload])
-  const submitMessage = (event) => {
+  const submitMessage = async (event) => {
     event.preventDefault();
+    setSending(true)
     console.log(photo.current.files)
+    const formData = new FormData()
     if (photo.current.files[0]){ 
-      const formData = new FormData()
       formData.append('file', photo.current.files[0])
-      fetch(`http://localhost:3000/message/${conversationId}`, {
+    }
+    if (newMessage.current.value) { 
+      formData.append('content', newMessage.current.value)
+    }
+    if (photo.current.files[0] ||newMessage.current.value ){
+      await fetch(`http://localhost:3000/message/${conversationId}`, {
         method: "POST", 
         body: formData, 
         credentials: "include",
-      }
-      )
-      .then(response => {return response.json()} )
-      .then(response=> { console.log(response)})
-    }
-    if (newMessage.current.value) {
-      fetch(`http://localhost:3000/message/${conversationId}`, {
-        method: "POST", body: JSON.stringify({
-          content: newMessage.current.value,
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        },
-        
-        credentials: "include",
-      }
-      )
+      })
       .then(response => {return response.json()} )
       .then(response=> { console.log(response)})
     }
     newMessage.current.value = null
     photo.current.value = null
+    setSending(true)
     setReload(true)
   }
   const childReload= () => setReload(true)
@@ -79,7 +72,8 @@ function Conversation({conversationId}) {
   return(<>
     <div>{(recipients && user) && recipients.map(recipient => <span key={recipient.id}>{recipient.id !== user.id && <>{recipient.displayName || recipient.username}</>}</span>)}</div>
     {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} reload={childReload}/>)}
-    <form onSubmit={submitMessage}><input type="file" ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input><button type="submit">Send</button></form>
+    <form onSubmit={submitMessage}><input type="file" ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input>
+    {!sending &&<button type="submit">Send</button>}</form>
   </>)
 }
 
