@@ -23,7 +23,6 @@ function Conversation({conversationId}) {
     )
     .then(response => {return response.json()} )
     .then(response=> {
-      console.log(response)
       setUser(response)
     })
     fetch(`http://localhost:3000/conversation/${conversationId}`, {
@@ -36,7 +35,6 @@ function Conversation({conversationId}) {
     )
     .then(response => {return response.json()} )
     .then(response=> {
-      console.log(response);
       setMessages(response.Messages)
       setRecipients(response.Users)
     })
@@ -44,7 +42,6 @@ function Conversation({conversationId}) {
   const submitMessage = async (event) => {
     event.preventDefault();
     setSending(true)
-    console.log(photo.current.files)
     const formData = new FormData()
     if (photo.current.files[0]){ 
       formData.append('file', photo.current.files[0])
@@ -67,8 +64,6 @@ function Conversation({conversationId}) {
     setReload(true)
   }
   const childReload= () => setReload(true)
-  console.log(messages)
-  console.log(recipients)
   return(<>
     <div>{(recipients && user) && recipients.map(recipient => <span key={recipient.id}>{recipient.id !== user.id && <>{recipient.displayName || recipient.username}</>}</span>)}</div>
     {(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} reload={childReload}/>)}

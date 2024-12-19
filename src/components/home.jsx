@@ -20,9 +20,13 @@ function Home({reload}){
     )
     .then(response => {return response.json()} )
     .then(response=> {
+      if (response.message === 'Not authenticated') {
+        setUser(null)
+      } else {
       setUser(response)
-  setConversations(response.conversations)
-  setFriends(response.friends);})
+      setConversations(response.conversations)
+      setFriends(response.friends);
+  }})
   fetch('http://localhost:3000/users', {
     method: "GET",
     headers: {
@@ -53,8 +57,8 @@ function Home({reload}){
         {open && <button onClick={()=>setOpen(false)}>Close</button>}
       </div>
     <h2>Friends</h2>
-    {friends && friends.map(friend => <div key={friends.indexOf(friend)}>
-      <img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p>{(new Date(friend.lastActive) > timeout) && <p>online</p>}<Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</>)}</div>)}
+    {friends && friends.map(friend => <div key={friend.id}>
+      <img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p>{(new Date(friend.lastActive) > timeout) && <p>online</p>}<Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><div key={conversation.id}>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</div>)}</div>)}
     {conversations && conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
         <span key={recipient.id}>{(user.id !== recipient.id) && <>{recipient.displayName || recipient.username} </>}</span>)}<br/>

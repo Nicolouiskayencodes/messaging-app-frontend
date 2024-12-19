@@ -6,7 +6,6 @@ function Profile() {
   const [reload, setReload] = useState(false)
   const photo = useRef(null)
   const nickname = useRef(null)
-  console.log(edit)
   useEffect(()=>{
     setReload(false)
     fetch('http://localhost:3000/userInfo', {
@@ -19,13 +18,11 @@ function Profile() {
     )
     .then(response => {return response.json()} )
     .then(response=> {
-      console.log(response)
       setUser(response)
     })
   }, [reload])
   const submitProfile = (event) => {
     event.preventDefault();
-    console.log(photo.current.files)
     if (photo.current.files[0]){ 
       const formData = new FormData()
       formData.append('file', photo.current.files[0])

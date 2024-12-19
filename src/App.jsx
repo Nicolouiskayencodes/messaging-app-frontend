@@ -13,7 +13,6 @@ function App(){
   const {page, elementid} = useParams();
   const [user, setUser] = useState(null);
   const [reload, setReload] = useState(false);
-
   const deleteUser = ()=> {
     setUser(null);
     setReload(true)
@@ -34,8 +33,11 @@ function App(){
     }
     )
     .then(response => {return response.json()} )
-    .then(response=> {
-  setUser(response);})
+    .then(response=> {if (response.message === 'Not authenticated') {
+      setUser(null)
+    } else {
+  setUser(response);
+  }})
   },[reload])
 
 
@@ -45,10 +47,10 @@ function App(){
         <div className="header">
           <div className="navbar">
             <button className="navlink"><Link to='/'>Home</Link></button>
-            <button className="navlink"><Link to="/login">Login</Link></button>
-            <button className="navlink"><Link to='/register'>Register</Link></button>
-            <button className="navlink"><Link to='/profile'>Profile</Link></button>
-            <Logout userDelete={deleteUser}/>
+            {!user && <button className="navlink"><Link to="/login">Login</Link></button>}
+            {!user && <button className="navlink"><Link to='/register'>Register</Link></button>}
+            {user && <button className="navlink"><Link to='/profile'>Profile</Link></button>}
+            {user && <Logout userDelete={deleteUser}/>}
           </div>
         </div>
         {page === 'login' ? (
