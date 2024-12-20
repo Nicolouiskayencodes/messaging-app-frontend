@@ -22,6 +22,8 @@ function Home({reload}){
     .then(response=> {
       if (response.message === 'Not authenticated') {
         setUser(null)
+        setConversations(null)
+        setFriends(null)
       } else {
       setUser(response)
       setConversations(response.conversations)
@@ -65,7 +67,9 @@ function Home({reload}){
       </Link>)}
     <Link to='/create'>Start Conversation</Link>
     </>
-  ) : (<p>Please <Link to='/login'>log in</Link> or <Link to='/register'>register</Link>.</p>)}
+  ) : (<><p>Please <Link to='/login'>log in</Link> or <Link to='/register'>register</Link>.</p>
+    <p>Join a rich community of friendly chatters on a platform that allows you to add friends, hosts group chats, and support picture messages.</p></>
+  )}
     </>
   )
 }

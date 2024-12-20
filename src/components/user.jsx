@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function User({user}) {
   const addFriend = async (id) => {
@@ -22,6 +23,7 @@ function User({user}) {
       <div className="user-dropdown">
         <p>{user.username}</p>
         <button onClick={()=>addFriend(user.id)}>Add Friend</button>
+        <button><Link to={`/create/${user.id}`}>Create new message</Link></button>
       </div>
     </div>
   )

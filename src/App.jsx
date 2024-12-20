@@ -43,29 +43,31 @@ function App(){
 
   return(
     <>
-      {user && <p>Welcome {user.username}</p>}
-        <div className="header">
-          <div className="navbar">
-            <button className="navlink"><Link to='/'>Home</Link></button>
-            {!user && <button className="navlink"><Link to="/login">Login</Link></button>}
-            {!user && <button className="navlink"><Link to='/register'>Register</Link></button>}
-            {user && <button className="navlink"><Link to='/profile'>Profile</Link></button>}
-            {user && <Logout userDelete={deleteUser}/>}
-          </div>
+      
+      <div className="header">
+        <h1>Nico&apos;s Messenger</h1>
+          {user && <span>Welcome {user.displayName || user.username}</span>}
+        <div className="navbar">
+          <button className="navlink"><Link to='/'>Home</Link></button>
+          {!user && <button className="navlink"><Link to="/login">Login</Link></button>}
+          {!user && <button className="navlink"><Link to='/register'>Register</Link></button>}
+          {user && <button className="navlink"><Link to='/profile'>Profile</Link></button>}
+          {user && <Logout userDelete={deleteUser}/>}
         </div>
-        {page === 'login' ? (
-          <Login loginUser={loginUser}/>
-        ): page === 'register' ? (
-          <Register />
-        ): page === 'create'  ? (
-          <CreateConversation toUser={parseInt(elementid)}/>
-        ) : page === 'conversation' ? (
-          <Conversation conversationId={parseInt(elementid)}/>
-        ) : page === 'profile' ? (
-          <Profile/>
-        ) : (
-          <Home reload={reload}/>
-        )}
+      </div>
+      {page === 'login' ? (
+        <Login loginUser={loginUser}/>
+      ): page === 'register' ? (
+        <Register />
+      ): page === 'create'  ? (
+        <CreateConversation toUser={parseInt(elementid)}/>
+      ) : page === 'conversation' ? (
+        <Conversation conversationId={parseInt(elementid)}/>
+      ) : page === 'profile' ? (
+        <Profile/>
+      ) : (
+        <Home reload={reload}/>
+      )}
     </>
   )
 }

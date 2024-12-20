@@ -66,7 +66,7 @@ function CreateConversation({toUser}){
       {recipients && recipients.map(recipient => <p key={recipients.indexOf(recipient)}>{recipient.displayName || recipient.username}<button onClick={()=>removeRecipient(recipient)}>X</button> </p>)}
     </ul>
     <ul className="user-list">
-      {users && users.map(user => <p key={user.id}>{user.displayName || user.username}{!recipients.includes(user) && <button onClick={() => addRecipient(user)}>+</button>}</p>)}
+      {users && users.map(user => <p key={user.id}>{!recipients.includes(user) && <button onClick={() => addRecipient(user)}>{user.displayName || user.username} +</button>}</p>)}
     </ul>
     <button onClick={startConversation}>Message</button>
     </>
