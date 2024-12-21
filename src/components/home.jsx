@@ -10,7 +10,7 @@ function Home({reload}){
   const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
   useEffect(()=> {
-    fetch('http://localhost:3000/userInfo', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -29,7 +29,7 @@ function Home({reload}){
       setConversations(response.conversations)
       setFriends(response.friends);
   }})
-  fetch('http://localhost:3000/users', {
+  fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/users', {
     method: "GET",
     headers: {
         "Content-Type": "application/json"

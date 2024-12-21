@@ -10,8 +10,10 @@ function Login({loginUser}){
 
   const submitLogin = async (event) => {
     event.preventDefault()  
-    await fetch("http://localhost:3000/login", {
+    // https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/login
+    fetch("https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/login", {
       method: "POST",
+      redirect: 'follow',
       headers: {
           "Content-Type": "application/json"
       },
@@ -20,14 +22,16 @@ function Login({loginUser}){
         password: password.current.value
       }),
       credentials: "include"
-  }).then(res=>{
-      return res.json();
-  }).then(data=>{
-      if (data.errors) {
-        console.log(data.errors);
-        setErrors(data.errors)
+  }).then(response=>{
+    console.log(response)
+      return response.text();
+  }).then(response=>{
+    console.log(response)
+      if (response.errors) {
+        console.log(response.errors);
+        setErrors(response.errors)
       } else{
-        loginUser(data)
+        loginUser(response)
         navigate('/')
       }
   })
@@ -40,7 +44,7 @@ function Login({loginUser}){
           <label>Username <br/>
             <input placeholder="Username" name="username" ref={username} /></label><br/>
           <label>Password<br/>
-            <input placeholder="Password" name="password" ref={password} /></label><br/>
+            <input placeholder="Password" name="password" type="password" ref={password} /></label><br/>
           <button onClick={submitLogin} className="submit">Login</button>
         </form>  
         </>

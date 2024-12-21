@@ -24,7 +24,7 @@ function App(){
 
   useEffect(()=>{
     setReload(false)
-    fetch('http://localhost:3000/userInfo', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"

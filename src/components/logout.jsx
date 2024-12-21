@@ -4,7 +4,7 @@ function Logout({userDelete}) {
   const navigate = useNavigate();
   const logout = async (event) => {
     event.preventDefault()  
-    await fetch("http://localhost:3000/logout", {
+    await fetch("https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/logout", {
       method: "GET",
       headers: {
           "Content-Type": "application/json"

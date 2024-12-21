@@ -11,7 +11,7 @@ function Register(){
   const submitLogin = async (event) => {
     event.preventDefault()  
     if (password.current.value === passwordConfirm.current.value && password.current.value && username.current.value){
-      await fetch("http://localhost:3000/register", {
+      await fetch("https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/register", {
       method: "POST",
       headers: {
           "Content-Type": "application/json"
@@ -33,7 +33,7 @@ function Register(){
       if (!username.current.value.trim()){
           errorList.push('Username must not be empty')
         }
-      if (!password.current.value.trim()){
+      if (!password.current.value){
           errorList.push('Password must not be empty ')
         }  
       if (password.current.value !== passwordConfirm.current.value) {

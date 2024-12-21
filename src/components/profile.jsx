@@ -8,7 +8,7 @@ function Profile() {
   const nickname = useRef(null)
   useEffect(()=>{
     setReload(false)
-    fetch('http://localhost:3000/userInfo', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -26,7 +26,7 @@ function Profile() {
     if (photo.current.files[0]){ 
       const formData = new FormData()
       formData.append('file', photo.current.files[0])
-      fetch(`http://localhost:3000/updateavatar`, {
+      fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/updateavatar`, {
         method: "PUT", 
         body: formData, 
         credentials: "include",
@@ -36,7 +36,7 @@ function Profile() {
       .then(response=> { console.log(response)})
     }
     if (nickname.current.value) {
-      fetch(`http://localhost:3000/updatename`, {
+      fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/updatename`, {
         method: "PUT", body: JSON.stringify({
           name: nickname.current.value,
         }),

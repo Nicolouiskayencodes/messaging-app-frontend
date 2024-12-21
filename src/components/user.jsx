@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function User({user}) {
   const addFriend = async (id) => {
-    fetch(`http://localhost:3000/friend/${id}`, {
+    fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/friend/${id}`, {
       method: "PUT",
       headers: {
           "Content-Type": "application/json"

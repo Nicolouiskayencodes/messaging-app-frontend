@@ -6,7 +6,7 @@ function Message({message, user, reload}) {
   const [edit, setEdit] = useState(false);
   const comment = useRef(null)
   const submitEdit = async () => {
-   await fetch(`http://localhost:3000/message/${message.id}`, {
+   await fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/message/${message.id}`, {
       method: "PUT", 
       headers: {
         "Content-Type": "application/json"
@@ -23,7 +23,7 @@ function Message({message, user, reload}) {
     reload()
   }
   const deleteComment = async () => {
-    await fetch(`http://localhost:3000/message/${message.id}`, {
+    await fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/message/${message.id}`, {
       method: "DELETE", 
       credentials: "include",
     }

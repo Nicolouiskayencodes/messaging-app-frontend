@@ -7,7 +7,7 @@ function CreateConversation({toUser}){
   const [users, setUsers] = useState(null);
   const [recipients, setRecipients] = useState([])
   useEffect(()=>{
-    fetch('http://localhost:3000/users', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/users', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -39,7 +39,7 @@ function CreateConversation({toUser}){
   }
   const startConversation = async () => {
     if (recipients.length > 0){
-    fetch('http://localhost:3000/conversation', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/conversation', {
       method: "POST",
       headers: {
           "Content-Type": "application/json"

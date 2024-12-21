@@ -13,7 +13,7 @@ function Conversation({conversationId}) {
   useEffect(()=>{
     setReload(false)
     setSending(false)
-    fetch('http://localhost:3000/userInfo', {
+    fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -25,7 +25,7 @@ function Conversation({conversationId}) {
     .then(response=> {
       setUser(response)
     })
-    fetch(`http://localhost:3000/conversation/${conversationId}`, {
+    fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/conversation/${conversationId}`, {
       method: "GET",
       headers: {
           "Content-Type": "application/json"
@@ -50,7 +50,7 @@ function Conversation({conversationId}) {
       formData.append('content', newMessage.current.value)
     }
     if (photo.current.files[0] ||newMessage.current.value ){
-      await fetch(`http://localhost:3000/message/${conversationId}`, {
+      await fetch(`https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/message/${conversationId}`, {
         method: "POST", 
         body: formData, 
         credentials: "include",
