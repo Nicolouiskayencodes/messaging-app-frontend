@@ -24,7 +24,7 @@ function Login({loginUser}){
       credentials: "include"
   }).then(response=>{
     console.log(response)
-      return response.text();
+      return response.json();
   }).then(response=>{
     console.log(response)
       if (response.errors) {
