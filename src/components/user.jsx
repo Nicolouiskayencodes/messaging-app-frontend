@@ -18,12 +18,19 @@ function User({user}) {
 
   return(
     <div className="user">
-      <img className="avatar" src={user.avatar}/>
-      {user.displayName ? (<button className="userbtn">{user.displayName}</button>) : (<button className="userbtn">{user.username}</button>)}
+      <div className="outer-user">
+      <div className="inner-user">
+      <img className="avatar" src={user.avatar || '/avatar.svg'}/>
+      {user.displayName ? (<span className="userbtn">{user.displayName}</span>) : (<span className="userbtn">{user.username}</span>)}
+      </div>
       <div className="user-dropdown">
+        <div className="user-info">
+      <img className="avatar" src={user.avatar || '/avatar.svg'}/>
         <p>{user.username}</p>
-        <button onClick={()=>addFriend(user.id)}>Add Friend</button>
-        <button><Link to={`/create/${user.id}`}>Create new message</Link></button>
+        </div>
+        <button onClick={()=>addFriend(user.id)} className="user-button">Add Friend</button>
+        <button className="user-button"><Link to={`/create/${user.id}`}>Create message</Link></button>
+      </div>
       </div>
     </div>
   )

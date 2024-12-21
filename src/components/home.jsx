@@ -53,19 +53,20 @@ function Home({reload}){
     <h1>Home</h1>
     { users ? (
       <>
-      <div>
-        {!open && <button onClick={()=>setOpen(true)}>See Users </button>}
+      <div className="see-users">
+        {!open && <button onClick={()=>setOpen(true)} className="user-button">See Users </button>}
+        {open && <button onClick={()=>setOpen(false)} className="user-button">Close</button>}
         {open && users.map(user => <User key={users.indexOf(user)} user={user} />)}
-        {open && <button onClick={()=>setOpen(false)}>Close</button>}
       </div>
-    <h2>Friends</h2>
-    {friends && friends.map(friend => <div key={friend.id}>
-      <img className="avatar" src={friend.avatar}/><p>{friend.displayName || friend.username}</p>{(new Date(friend.lastActive) > timeout) && <p>online</p>}<Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><div key={conversation.id}>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</div>)}</div>)}
-    {conversations && conversations.map(conversation => 
+    {friends && <>{friends[0] && <h2>Friends</h2>}</>}
+    {friends && friends.map(friend => <div key={friend.id} className="friend">
+      <img className="avatar" src={friend.avatar || '/avatar.svg'}/><p>{friend.displayName || friend.username}</p><Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><div key={conversation.id}>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</div>)}{(new Date(friend.lastActive) > timeout) && <><img src="/online.svg"/><span className="online">online</span></>}</div>)}
+      {conversations && <h2>Conversations</h2>}
+    {conversations && <div className="conversations"> {conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
         <span key={recipient.id}>{(user.id !== recipient.id) && <>{recipient.displayName || recipient.username} </>}</span>)}<br/>
-      </Link>)}
-    <Link to='/create'>Start Conversation</Link>
+      </Link>)}</div>}
+    <Link to='/create' className="start-conversation">Start Conversation</Link>
     </>
   ) : (<><p>Please <Link to='/login'>log in</Link> or <Link to='/register'>register</Link>.</p>
     <p>Join a rich community of friendly chatters on a platform that allows you to add friends, hosts group chats, and support picture messages.</p></>

@@ -41,7 +41,7 @@ function Login({loginUser}){
             <input placeholder="Username" name="username" ref={username} /></label><br/>
           <label>Password<br/>
             <input placeholder="Password" name="password" ref={password} /></label><br/>
-          <button onClick={submitLogin}>Login</button>
+          <button onClick={submitLogin} className="submit">Login</button>
         </form>  
         </>
     )

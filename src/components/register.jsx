@@ -5,12 +5,12 @@ function Register(){
   const username = useRef(null)
   const password = useRef(null)
   const passwordConfirm = useRef(null)
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState(null)
   const navigate = useNavigate();
 
   const submitLogin = async (event) => {
     event.preventDefault()  
-    if (password.current.value === passwordConfirm.current.value){
+    if (password.current.value === passwordConfirm.current.value && password.current.value && username.current.value){
       await fetch("http://localhost:3000/register", {
       method: "POST",
       headers: {
@@ -26,10 +26,19 @@ function Register(){
       console.log(data);
       navigate('/')
   })
-    } else {
-      if (!errors.includes('Passwords do not match')) {
-        setErrors([...errors, 'Passwords do not match'])
+    } else  {
+      const errorList = []
+      if (!username.current.value){
+          errorList.push('Username must not be empty')
+        }
+      if (!password.current.value){
+          errorList.push('Password must not be empty ')
+        }  
+      if (password.current.value !== passwordConfirm.current.value) {
+        errorList.push('Passwords do not match')
       }
+      setErrors(errorList)  
+      
     }
     
   
@@ -37,16 +46,16 @@ function Register(){
 
     return(
       <>
-      {errors && errors.map(error => <p key={errors.indexOf(error)}>{error}</p>)}
+      {errors && errors.map(error => <p key={errors.indexOf(error)} className="errors">{error}</p>)}
         <form className="register">
             <label>Username<br></br>
-            <input placeholder="Username" name="username" ref={username} /></label><br/>
+            <input placeholder="Username" name="username" ref={username} required/></label><br/>
             <label>Password<br/>
-            <input placeholder="Password" name="password" ref={password} type="password"/></label><br/>
+            <input placeholder="Password" name="password" ref={password} type="password" required/></label><br/>
             <label>Confirm Password<br/>
             <input placeholder="Confirm Password" name="password-confirm" ref={passwordConfirm} type="password"></input></label><br/>
 
-            <button onClick={submitLogin}>Register</button>
+            <button onClick={submitLogin} className="submit">Register</button>
         </form>  
       </>
     )

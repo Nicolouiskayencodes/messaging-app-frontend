@@ -63,7 +63,7 @@ function Profile() {
     <label>Nickname: <input type="text" ref={nickname}></input></label>
     <button onClick={submitProfile} >Submit</button>
   </>) : (<>
-    {user.avatar ? (<img src={user.avatar} alt="Your avatar" />) : (<img />)}
+  <img src={user.avatar || '/avatar.svg'} alt="Your avatar" />
   <p>Nickname: {user.displayName || user.username}</p>
   <p>Username: {user.username}</p> 
   <button onClick={()=>setEdit(true)} >Edit</button>

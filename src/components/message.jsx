@@ -36,17 +36,21 @@ function Message({message, user, reload}) {
   return(<>
     {message.authorId === user.id ? (<>
       {(edit) ? (
-        <div className="sent"><img src={message.image}/><input defaultValue={message.content} ref={comment}></input> 
-      <button onClick={submitEdit}>Edit</button>
+        <div className="sent"><img src={message.image}/><textarea className="editmessage" defaultValue={message.content} ref={comment} ></textarea> 
+        <div className="messageud">
+        <button onClick={submitEdit}>Edit</button>
         <button onClick={()=>setEdit(false)}>Cancel</button>
+        </div>
       </div>
       ) : (
-        <div className="sent"><img src={message.image}/> <p>{message.content}</p><img className="avatar" src={message.author.avatar}/><p>{message.author.displayName || message.author.username}</p><p>{Date(message.createdAt)}</p> 
-      {(message.content !== null) && <button onClick={()=> setEdit(true)}>Edit</button>}
+        <div className="sent"><div className="message-content sent-content"><img src={message.image}/> <p>{message.content}</p></div><div className="sent-info"><div className="sent-user"><img className="avatar" src={message.author.avatar || '/avatar.svg'}/><p>{message.author.displayName || message.author.username}</p></div><div><p className="timestamp">{new Date(message.createdAt).toLocaleString()}</p></div>
+      <div className="messageud">{(message.content !== null) && <button onClick={()=> setEdit(true)}>Edit</button>}
         <button onClick={deleteComment}>Delete</button>
+        </div>
+        </div>
       </div>
       )}
-    </>) : (<div className="received"><img src={message.image}/><p>{message.content}</p><img className="avatar" src={message.author.avatar}/><p>{message.author.displayName || message.author.username}</p><p>{Date(message.createdA)}</p></div>)}
+    </>) : (<div className="received"><div className="message-content received-content"><img src={message.image}/><p>{message.content}</p></div><div className="received-info"><div className="received-user"><img className="avatar" src={message.author.avatar || '/avatar.svg'}/><p>{message.author.displayName || message.author.username}</p></div><p className="timestamp">{new Date(message.createdAt).toLocaleString()}</p></div></div>)}
   </>)
 }
 

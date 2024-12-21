@@ -46,7 +46,7 @@ function App(){
       
       <div className="header">
         <h1>Nico&apos;s Messenger</h1>
-          {user && <span>Welcome {user.displayName || user.username}</span>}
+          {user && <span>Welcome {user.displayName || user.username}!</span>}
         <div className="navbar">
           <button className="navlink"><Link to='/'>Home</Link></button>
           {!user && <button className="navlink"><Link to="/login">Login</Link></button>}
@@ -55,6 +55,8 @@ function App(){
           {user && <Logout userDelete={deleteUser}/>}
         </div>
       </div>
+      <div className="flex-body">
+      <div className="body-content">
       {page === 'login' ? (
         <Login loginUser={loginUser}/>
       ): page === 'register' ? (
@@ -68,6 +70,8 @@ function App(){
       ) : (
         <Home reload={reload}/>
       )}
+      </div>
+      </div>
     </>
   )
 }

@@ -63,12 +63,13 @@ function CreateConversation({toUser}){
     <>
     <h1>Recipients</h1>
     <ul className="recipient-list">
-      {recipients && recipients.map(recipient => <p key={recipients.indexOf(recipient)}>{recipient.displayName || recipient.username}<button onClick={()=>removeRecipient(recipient)}>X</button> </p>)}
+      {recipients && recipients.map(recipient => <p key={recipients.indexOf(recipient)}>{recipient.displayName || recipient.username} <button onClick={()=>removeRecipient(recipient)}>X</button> </p>)}
     </ul>
+    <h1>Add</h1>
     <ul className="user-list">
-      {users && users.map(user => <p key={user.id}>{!recipients.includes(user) && <button onClick={() => addRecipient(user)}>{user.displayName || user.username} +</button>}</p>)}
+      {users && users.map(user => <p key={user.id}>{!recipients.includes(user) && <button onClick={() => addRecipient(user)} className="add-recipient"><img src={user.avatar || '/avatar.svg'} className="avatar"/> {user.displayName || user.username} +</button>}</p>)}
     </ul>
-    <button onClick={startConversation}>Message</button>
+    <button onClick={startConversation} className="new-conversation">Message</button>
     </>
     
   )
