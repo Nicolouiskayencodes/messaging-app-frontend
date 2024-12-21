@@ -17,21 +17,23 @@ function Register(){
           "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: username.current.value,
+        username: username.current.value.trim(),
         password: password.current.value
       }),
     }).then(res=>{
       return res.json();
   }).then(data=>{
       console.log(data);
-      navigate('/')
+      if (data.message === 'Register success'){
+        navigate('/')
+      }
   })
     } else  {
       const errorList = []
-      if (!username.current.value){
+      if (!username.current.value.trim()){
           errorList.push('Username must not be empty')
         }
-      if (!password.current.value){
+      if (!password.current.value.trim()){
           errorList.push('Password must not be empty ')
         }  
       if (password.current.value !== passwordConfirm.current.value) {
