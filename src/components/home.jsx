@@ -9,9 +9,8 @@ function Home({reload}){
   const [friends, setFriends] = useState(null)
   const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   useEffect(()=> {
-    setLoading(true)
     fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
