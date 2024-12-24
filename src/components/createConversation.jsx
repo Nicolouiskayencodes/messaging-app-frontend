@@ -6,7 +6,9 @@ function CreateConversation({toUser}){
   const navigate = useNavigate();
   const [users, setUsers] = useState(null);
   const [recipients, setRecipients] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(()=>{
+    setLoading(true)
     fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/users', {
       method: "GET",
       headers: {
@@ -27,6 +29,7 @@ function CreateConversation({toUser}){
           }
         });
       }
+      setLoading(false)
   })
   }, [toUser])
   const addRecipient = (user) => {
@@ -38,6 +41,7 @@ function CreateConversation({toUser}){
     setRecipients(recipients=> recipients.filter(recipient => recipient.id !== user.id))
   }
   const startConversation = async () => {
+    setLoading(true)
     if (recipients.length > 0){
     fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/conversation', {
       method: "POST",
@@ -53,6 +57,7 @@ function CreateConversation({toUser}){
     .then(response => {return response.json()} )
     .then(response=> {
       const id = response.id;
+      setLoading(false)
       navigate(`/conversation/${id}`)
     })
   }
@@ -69,7 +74,7 @@ function CreateConversation({toUser}){
     <ul className="user-list">
       {users && users.map(user => <p key={user.id}>{!recipients.includes(user) && <button onClick={() => addRecipient(user)} className="add-recipient"><img src={user.avatar || '/avatar.svg'} className="avatar"/> {user.displayName || user.username} +</button>}</p>)}
     </ul>
-    <button onClick={startConversation} className="new-conversation">Message</button>
+    {!loading && <button onClick={startConversation} className="new-conversation">Message</button>}
     </>
     
   )

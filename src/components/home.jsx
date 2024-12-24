@@ -9,7 +9,9 @@ function Home({reload}){
   const [friends, setFriends] = useState(null)
   const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
   useEffect(()=> {
+    setLoading(true)
     fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
       method: "GET",
       headers: {
@@ -45,12 +47,14 @@ function Home({reload}){
       setUsers(response)
     }
 })
-  },[reload])
+setLoading(false)
+  },[reload, loading])
   const now = new Date()
   const timeout = new Date(now.getTime() - (5*60*1000))
   return(
     <>
     <h1>Home</h1>
+    {loading ? (<p>Loading...</p>):(<>
     { users ? (
       <>
       <div className="see-users">
@@ -71,7 +75,10 @@ function Home({reload}){
   ) : (<><p>Please <Link to='/login'>log in</Link> or <Link to='/register'>register</Link>.</p>
     <p>Join a rich community of friendly chatters on a platform that allows you to add friends, hosts group chats, and support picture messages.</p></>
   )}
+  </>
+  )}
     </>
+  
   )
 }
 

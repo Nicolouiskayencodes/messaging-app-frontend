@@ -6,11 +6,12 @@ function Login({loginUser}){
   const username = useRef(null)
   const password = useRef(null)
   const [errors, setErrors] = useState(null)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const submitLogin = async (event) => {
+    setLoading(true)
     event.preventDefault()  
-    // https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/login
     fetch("https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/login", {
       method: "POST",
       redirect: 'follow',
@@ -30,8 +31,10 @@ function Login({loginUser}){
       if (response.errors) {
         console.log(response.errors);
         setErrors(response.errors)
+        setLoading(false)
       } else{
         loginUser(response)
+        setLoading(true)
         navigate('/')
       }
   })
@@ -45,7 +48,7 @@ function Login({loginUser}){
             <input placeholder="Username" name="username" ref={username} /></label><br/>
           <label>Password<br/>
             <input placeholder="Password" name="password" type="password" ref={password} /></label><br/>
-          <button onClick={submitLogin} className="submit">Login</button>
+          {!loading && <button onClick={submitLogin} className="submit">Login</button>}
         </form>  
         </>
     )

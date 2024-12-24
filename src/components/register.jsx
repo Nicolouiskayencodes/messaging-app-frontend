@@ -6,10 +6,12 @@ function Register(){
   const password = useRef(null)
   const passwordConfirm = useRef(null)
   const [errors, setErrors] = useState(null)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const submitLogin = async (event) => {
     event.preventDefault()  
+    setLoading(true)
     if (password.current.value === passwordConfirm.current.value && password.current.value && username.current.value){
       await fetch("https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/register", {
       method: "POST",
@@ -25,6 +27,7 @@ function Register(){
   }).then(data=>{
       console.log(data);
       if (data.message === 'Register success'){
+        setLoading(false)
         navigate('/')
       }
   })
@@ -40,7 +43,7 @@ function Register(){
         errorList.push('Passwords do not match')
       }
       setErrors(errorList)  
-      
+      setLoading(false)
     }
     
   
@@ -57,7 +60,7 @@ function Register(){
             <label>Confirm Password<br/>
             <input placeholder="Confirm Password" name="password-confirm" ref={passwordConfirm} type="password"></input></label><br/>
 
-            <button onClick={submitLogin} className="submit">Register</button>
+            {!loading && <button onClick={submitLogin} className="submit">Register</button>}
         </form>  
       </>
     )
