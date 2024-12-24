@@ -25,6 +25,7 @@ function Login({loginUser}){
       credentials: "include"
   }).then(response=>{
     if (response.status === 401){
+      setErrors([{msg: 'Incorrect username or password'}])
       setLoading(false)
     }
       return response.json();
