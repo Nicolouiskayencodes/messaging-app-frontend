@@ -99,7 +99,7 @@ img {
   padding: 10px;
   float: right;
   max-width: 40%;
-  background-color: var(--grey);
+  background-color: inherit;
   box-shadow: 1px 3px 3px black;
   margin: 10px;
   border: 1px solid black;
