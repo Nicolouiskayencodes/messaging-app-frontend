@@ -24,17 +24,18 @@ function Login({loginUser}){
       }),
       credentials: "include"
   }).then(response=>{
-    console.log(response)
+    if (response.status === 401){
+      setLoading(false)
+    }
       return response.json();
   }).then(response=>{
-    console.log(response)
       if (response.errors) {
         console.log(response.errors);
         setErrors(response.errors)
         setLoading(false)
-      } else{
+      } else {
         loginUser(response)
-        setLoading(true)
+        setLoading(false)
         navigate('/')
       }
   })

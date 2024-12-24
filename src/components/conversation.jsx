@@ -40,6 +40,7 @@ function Conversation({conversationId}) {
     })
   }, [conversationId, reload])
   const submitMessage = async (event) => {
+    if (sending === false) {
     event.preventDefault();
     setSending(true)
     const formData = new FormData()
@@ -62,6 +63,7 @@ function Conversation({conversationId}) {
     photo.current.value = null
     setSending(true)
     setReload(true)
+  }
   }
   const childReload= () => setReload(true)
   return(<><h1 className="conversation-title">{(recipients && user) && recipients.map(recipient => <span key={recipient.id}>{recipient.id !== user.id && <> | { recipient.displayName || recipient.username} | </>}</span>)}</h1>
