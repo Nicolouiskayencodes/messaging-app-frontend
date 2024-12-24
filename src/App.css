@@ -165,12 +165,6 @@ img {
   gap: 10px;
   align-items: center;
 }
-.friend a {
-  color: var(--navy);
-}
-.friend a:hover {
-  color: var(--orange);
-} 
 .conversations {
   display: grid;
   gap: 5px;
