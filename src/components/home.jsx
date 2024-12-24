@@ -9,7 +9,7 @@ function Home({reload}){
   const [friends, setFriends] = useState(null)
   const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   useEffect(()=> {
     setLoading(true)
     fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/userInfo', {
@@ -26,10 +26,12 @@ function Home({reload}){
         setUser(null)
         setConversations(null)
         setFriends(null)
+        setLoading(false)
       } else {
       setUser(response)
       setConversations(response.conversations)
       setFriends(response.friends);
+      setLoading(false)
   }})
   fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/users', {
     method: "GET",
@@ -47,7 +49,6 @@ function Home({reload}){
       setUsers(response)
     }
 })
-setLoading(false)
   },[reload, loading])
   const now = new Date()
   const timeout = new Date(now.getTime() - (5*60*1000))
@@ -55,8 +56,8 @@ setLoading(false)
   return(
     <>
     <h1>Home</h1>
-    {loading ? (<p>Loading...</p>):(<>
-    { users ? (
+    {loading ? (<p>Loading...</p>) :
+    users ? (
       <>
       <div className="see-users">
         {!open && <button onClick={()=>setOpen(true)} className="user-button">See Users </button>}
@@ -77,8 +78,7 @@ setLoading(false)
     <p>Join a rich community of friendly chatters on a platform that allows you to add friends, hosts group chats, and support picture messages.</p></>
   )}
   </>
-  )}
-    </>
+  
   
   )
 }
