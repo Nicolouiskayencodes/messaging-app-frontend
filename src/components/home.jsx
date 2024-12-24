@@ -25,13 +25,13 @@ function Home({reload}){
         setUser(null)
         setConversations(null)
         setFriends(null)
-        setLoading(false)
       } else {
       setUser(response)
       setConversations(response.conversations)
       setFriends(response.friends);
-      setLoading(false)
-  }})
+  }
+  setLoading(false)
+})
   fetch('https://worrying-nonnah-niclouiskayencodes-40f94851.koyeb.app/users', {
     method: "GET",
     headers: {
