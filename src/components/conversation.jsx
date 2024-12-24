@@ -64,7 +64,7 @@ function Conversation({conversationId}) {
     setReload(true)
   }
   const childReload= () => setReload(true)
-  return(<><h1 className="conversation-title">{(recipients && user) && recipients.map(recipient => <span key={recipient.id}> | {recipient.id !== user.id && <>{recipient.displayName !== '' ? (<>recipient.displayName</>) : (<>recipient.username</>)}</>} | </span>)}</h1>
+  return(<><h1 className="conversation-title">{(recipients && user) && recipients.map(recipient => <span key={recipient.id}> | {recipient.id !== user.id && <>{ recipient.displayName || recipient.username}</>} | </span>)}</h1>
     <div className="conversation-container">
     <div><div className="conversation">{(messages && user)  && messages.map(message => <Message key={messages.indexOf(message)} message={message} user={user} reload={childReload}/>)}</div>
     <form onSubmit={submitMessage} className="new-message"><label>New Message:</label><input type="file" ref={photo} name="picture"></input><input type="text" ref={newMessage} name="content"></input>
