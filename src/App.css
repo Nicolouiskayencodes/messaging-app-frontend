@@ -378,6 +378,15 @@ img {
   gap: 10px;
   margin: 10px;
 }
+.friend-link {
+  color: var(--orange);
+}
+.friend-link:hover {
+  color: #fdb43f
+}
+.friend-link:active{
+  color: #e7930c
+}
 @media (prefers-color-scheme: light) { 
   .body-content {
     background-color: var(--white);

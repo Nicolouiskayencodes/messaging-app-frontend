@@ -51,7 +51,7 @@ setLoading(false)
   },[reload, loading])
   const now = new Date()
   const timeout = new Date(now.getTime() - (5*60*1000))
-  
+
   return(
     <>
     <h1>Home</h1>
@@ -65,7 +65,7 @@ setLoading(false)
       </div>
     {friends && <>{friends[0] && <h2>Friends</h2>}</>}
     {friends && friends.map(friend => <div key={friend.id} className="friend">
-      <img className="avatar" src={friend.avatar || '/avatar.svg'}/><p>{friend.displayName || friend.username}</p><Link to={`/create/${friend.id}`}>Create new message</Link> {friend.conversations.map(conversation=><div key={conversation.id}>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`}>Open message</Link>}</div>)}{(new Date(friend.lastActive) > timeout) && <><img src="/online.svg"/><span className="online">online</span></>}</div>)}
+      <img className="avatar" src={friend.avatar || '/avatar.svg'}/><p>{friend.displayName || friend.username}</p><Link to={`/create/${friend.id}`} className="friend-link">Create new message</Link> {friend.conversations.map(conversation=><div key={conversation.id}>{conversation.Users.length === 2 && <Link to={`/conversation/${conversation.id}`} className="friend-link">Open message</Link>}</div>)}{(new Date(friend.lastActive) > timeout) && <><img src="/online.svg"/><span className="online">online</span></>}</div>)}
       {conversations && <h2>Conversations</h2>}
     {conversations && <div className="conversations"> {conversations.map(conversation => 
       <Link to={`/conversation/${conversation.id}`} key={conversation.id} className={conversation.readBy.some(participant => participant.id === user.id)? ("read") : ("unread")}>{conversation.Users.map(recipient => 
